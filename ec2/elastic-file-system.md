@@ -48,6 +48,7 @@
 
 ### Performance Modes
 
+- Not editable after creation
 - **General Purpose** (default) – latency-sensitive use cases (web server, CMS, etc…)
 - **Max I/O** – higher latency, throughput, highly parallel (big data, media processing)
 
@@ -71,3 +72,30 @@ Amazon EFS storage classes are designed for the most effective storage depending
     - supported on EFS file systems with Elastic throughput. 
     - Can't update file system’s throughput to Bursting or Provisioned once the file system has data in the Archive storage class.
 
+## EBS vs EFS vs Instance Store
+
+### Elastic Block Storage
+
+- EBS volumes…
+    - Attached to one instance (except multi-attach on io1/io2)
+    - Locked to the Availability Zone (AZ)
+    - gp2: IO increases if the disk size increases
+    - gp3 & io1: can increase IO independently
+- To migrate an EBS volume across AZ
+    - Take a snapshot
+    - Restore the snapshot on another AZ
+- EBS backups use IO and you shouldn’t run them while your application is handling a lot of traffic
+- Root EBS Volumes of instances get terminated by default if the EC2 instance gets terminated. (you can disable that)
+
+### Elastic File System
+
+- Mounting 100s of instances across AZ, locked to the region
+- Only for instances running POSIX systems
+- More expensive than EBS
+    - Can leverage Storage Tiers for cost savings
+
+### Instance Store
+
+- Physically attached to the host computer. 
+- Can’t detach an instance store volume from one instance and attach it to a different instance.
+- Exists only during the instance lifetime
