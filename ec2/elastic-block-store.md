@@ -105,6 +105,17 @@
 
 - There are several factors that can affect the performance of EBS volumes, such as instance configuration, I/O characteristics, and workload demand. **To fully use the IOPS provisioned on an EBS volume, use EBS–optimized instances.**
 
+### EBS Multi-Attach feature
+
+- Supported only by Provisioned IOPS SSD volumes
+- Allows to attach the same EBS volume to multiple EC2 instances in the same AZ
+- Each instance has full read & write permissions to the high-performance volume
+- Use case:
+    - Achieve higher application availability in clustered Linux applications (ex: Teradata)
+    - Applications that must manage concurrent write operations
+- Up to 16 EC2 Instances at a time
+- Must use a file system that’s cluster-aware (not XFS, EXT4, etc…)
+
 ## Hard Disk Drives (HDD)
 
 - **Cannot be a boot volume**
